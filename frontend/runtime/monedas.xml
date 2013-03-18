@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<indicadores>
+<indicador nombre="IPC feb. (Mensual)">0,1</indicador>
+<indicador nombre="IPC feb. (Anual)">1,3</indicador>
+<indicador nombre="IPCX feb.(Var.%) (Mensual)">0,1</indicador>
+<indicador nombre="IPCX feb.(Var.%) (Anual)">1,0</indicador>
+<indicador nombre="TPM (Mensual)">-</indicador>
+<indicador nombre="TPM (Anual)">5,0%</indicador>
+<indicador nombre="UF">22.859,79</indicador>
+<indicador nombre="UTM (Marzo)">40.085,00</indicador>
+<indicador nombre="Dólar Observado">471,63</indicador>
+<indicador nombre="Euro">615,62</indicador>
+<indicador nombre="TCM (02/01/1998=100)">93,54</indicador>
+</indicadores>

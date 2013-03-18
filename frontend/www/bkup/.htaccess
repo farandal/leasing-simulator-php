@@ -1,0 +1,5 @@
+AuthUserFile /home/rwaycl/.htpasswd
+AuthGroupFile /dev/null
+AuthName EnterPassword
+AuthType Basic
+Require valid-user

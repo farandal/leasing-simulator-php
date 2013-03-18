@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<indicadores>
+<indicador nombre="IPC oct. (Mensual)">0,6</indicador>
+<indicador nombre="IPC oct. (Anual)">2,9</indicador>
+<indicador nombre="IPCX oct.(Var.%) (Mensual)">0,2</indicador>
+<indicador nombre="IPCX oct.(Var.%) (Anual)">2,1</indicador>
+<indicador nombre="TPM (Mensual)">-</indicador>
+<indicador nombre="TPM (Anual)">5,0%</indicador>
+<indicador nombre="UF">22.830,92</indicador>
+<indicador nombre="UTM (Noviembre)">39.966,00</indicador>
+<indicador nombre="Dólar Observado">484,48</indicador>
+<indicador nombre="Euro">616,86</indicador>
+<indicador nombre="TCM (02/01/1998=100)">96,20</indicador>
+</indicadores>
