@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'tasa':
  * @property integer $id
- * @property integer $tipo
+ * @property string $tipo
  * @property integer $rango
  * @property double $tasa
  */
@@ -37,9 +37,9 @@ class Tasa extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tipo, rango, tasa', 'required'),
-			array('tipo, rango', 'numerical', 'integerOnly'=>true),
-			array('tasa', 'numerical'),
+			array('tipo, rango, tasa, compro, comeje', 'required'),
+			//array('tipo, rango', 'numerical', 'integerOnly'=>true),
+			//array('tasa', 'numerical'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, tipo, rango, tasa', 'safe', 'on'=>'search'),
@@ -67,6 +67,8 @@ class Tasa extends CActiveRecord
 			'tipo' => 'Tipo',
 			'rango' => 'Rango',
 			'tasa' => 'Tasa',
+			'compro' => 'Compro',
+			'comeje' => 'Comeje',
 		);
 	}
 
@@ -85,6 +87,9 @@ class Tasa extends CActiveRecord
 		$criteria->compare('tipo',$this->tipo);
 		$criteria->compare('rango',$this->rango);
 		$criteria->compare('tasa',$this->tasa);
+
+		//$criteria->compare('compro',$this->compro);
+		//$criteria->compare('comeje',$this->comeje);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

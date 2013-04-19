@@ -75,15 +75,15 @@ class SimulacionController extends Controller
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	
-        public function actionPdf($id) {
-                $model = $this->loadModel($id);
-                # HTML2PDF has very similar syntax
-                $html2pdf = Yii::app()->ePdf->HTML2PDF();
-                $html2pdf->WriteHTML($this->renderPartial('_formulario',array("data"=>$model,"ispdf"=>true,"superadmin"=>$this->is_superadmin), true));
-                $html2pdf->Output();
-                header('Content-Type: application/pdf');
+    public function actionPdf($id) {
+		  $model = $this->loadModel($id);
+		  # HTML2PDF has very similar syntax
+		  $html2pdf = Yii::app()->ePdf->HTML2PDF();
+		  $html2pdf->WriteHTML($this->renderPartial('_formulario',array("data"=>$model,"ispdf"=>true,"superadmin"=>$this->is_superadmin), true));
+		  $html2pdf->Output();
+		  header('Content-Type: application/pdf');
                 
-        }
+     }
         
         
         
@@ -92,22 +92,38 @@ class SimulacionController extends Controller
             $model = $this->loadModel($id);
             
             if(isset($_POST['email']))
-		{
-			
-                    # HTML2PDF has very similar syntax
+		    {
+			        # HTML2PDF has very similar syntax
                     $html2pdf = Yii::app()->ePdf->HTML2PDF();
-                    $html2pdf->WriteHTML($this->renderPartial('_formulario',array("data"=>$model,"ispdf"=>true,"superadmin"=>$this->is_superadmin), true));
-                    Yii::import('common.extensions.yiimail.YiiMailMessage');
+                    $html2pdf->WriteHTML($this->renderPartial('_formulario',array("data"=>$model,"ispdf"=>true,"superadmin"=>false), true));
+                   
+				    Yii::import('common.extensions.yiimail.YiiMailMessage');
                     $message = new YiiMailMessage;
                     $message->setBody('RightWay - Cotización Nº '.$id, 'text/html');
-                    $file = Swift_Attachment::newInstance($html2pdf->Output("","S"), "rightway_cotizacion_".$id.".pdf");
+                    
+					$cotizacion_file = '/home/rwaycl/cotizaciones/rightway_cotizacion_'.$id.'.pdf';
+					$adicional_file = '/home/rwaycl/rightway/frontend/www/files/ANTECEDENTESREQUERIDOSRIGHTWAYLEASING.pdf';
+					
+					$html2pdf->Output($cotizacion_file, 'F');
+				
+				   	$oPdftk = Yii::app()->ePdf->PDFTK();
+					
+				    $oPdftk ->setInputFile(array("filename" => $cotizacion_file))
+                            ->setInputFile(array("filename" => $adicional_file));
+				
+				
+					$final_pdf = $oPdftk->_renderPdf();
+					
+					
+					$file = Swift_Attachment::newInstance( $final_pdf , "rightway_cotizacion_".$id.".pdf");
                     $message->attach($file);
+					
+					
                     $message->subject = 'RightWay - Cotización Nº '.$id;
                     $message->addTo($_POST['email']);
                     $message->from = Yii::app()->params['adminEmail'];
                     Yii::app()->mail->send($message);
-                
-		}
+			 }
             
 
               $this->render('email',array(

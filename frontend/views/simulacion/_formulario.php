@@ -4,7 +4,7 @@ $usuario = YumUser::model()->cache(500)->findByPk($data->prospecto->user_id); ?>
 
 <?
  			$valor_UF = Calculos::getMoneda("UF")->valor;
-                        $valor_USD = Calculos::getMoneda("USD")->valor;
+            $valor_USD = Calculos::getMoneda("USD")->valor;
 
 
 ?>
@@ -31,8 +31,7 @@ $usuario = YumUser::model()->cache(500)->findByPk($data->prospecto->user_id); ?>
     </tr>
 
     <tr>
-      <td style="text-align:left;font-size:18px;"><strong><?=$data->prospecto->em_nombre?> </strong></td>
-      <td colspan="2" style="text-align:left;">RUT: <?=Rut::getRutCompleto($data->prospecto->em_rut,1)?> </td>
+      <td colspan="3" style="text-align:left;font-size:18px;"><strong><?=$data->prospecto->em_nombre?> </strong>, RUT: <?=Rut::getRutCompleto($data->prospecto->em_rut,1)?> </td>
     </tr>
 
     <tr>
@@ -48,8 +47,10 @@ $usuario = YumUser::model()->cache(500)->findByPk($data->prospecto->user_id); ?>
  
   
   <tr>
-    <td style="text-align:left;font-size:18px;"><strong>Atn. <?=$data->prospecto->pe_nombre?> <?=$data->prospecto->pe_apellido?> </strong></td>
-    <td colspan="2" style="text-align:left;"><? if($data->prospecto->em == 0) { ?> <b>RUT: <?=Rut::getRutCompleto($data->prospecto->pe_rut,1)?></b> <? } ?>  </td>
+    <td colspan="3" style="text-align:left;font-size:18px;"><strong>Atn. <?=$data->prospecto->pe_nombre?> <?=$data->prospecto->pe_apellido?> </strong>
+      <? if($data->prospecto->em == 0) { ?> 
+    , <b>RUT: <?=Rut::getRutCompleto($data->prospecto->pe_rut,1)?></b> 
+	<? } ?>  </td>
   </tr>
   
   <tr>
@@ -57,7 +58,7 @@ $usuario = YumUser::model()->cache(500)->findByPk($data->prospecto->user_id); ?>
     <td colspan="2" style="text-align:left;">&nbsp;</td>
   </tr>
   <tr>
-    <td style="text-align:left;">De nuestra consideración:<br/></td>
+    <td style="text-align:left;">De nuestra consideración:  </br></td>
     <td colspan="2" style="text-align:left;">&nbsp;</td>
   </tr>
   <tr>
@@ -69,7 +70,9 @@ $usuario = YumUser::model()->cache(500)->findByPk($data->prospecto->user_id); ?>
     <td colspan="2" style="text-align:left;">&nbsp;</td>
   </tr>
   <tr>
-    <td colspan="3" style="text-align:left;"><b>1. Equipo marca <?=$data->prospecto->eq_marca?>, Modelo <?=$data->prospecto->eq_modelo?>, Año <?=$data->prospecto->eq_ano?>, con un valor de <?=Monedas::formato($data->prospecto->co_monto,$data->prospecto->eqMoneda->visual)?>+ IVA</b></td>
+    <td colspan="3" style="text-align:left;"><b>1. Equipo marca <?=$data->prospecto->eq_marca?>, Modelo <?=$data->prospecto->eq_modelo?>, 
+     </br>
+    Año <?=$data->prospecto->eq_ano?>, con un valor de <?=Monedas::formato($data->prospecto->co_monto,$data->prospecto->eqMoneda->visual)?>+ IVA</b></td>
   </tr>
   <tr>
     <td colspan="3" style="text-align:left;">&nbsp;</td>
@@ -171,14 +174,13 @@ $usuario = YumUser::model()->cache(500)->findByPk($data->prospecto->user_id); ?>
     <td colspan="3" style="text-align:left;font-size:14px;"><strong>Seguro de la Operación</strong></td>
   </tr>
   <tr>
-    <td colspan="3" style="text-align:left;font-size:14px;">Los seguros SI se encuentran incluidos por todo el período del contrato, los cuales deberan ser incorporados a la cuota.</td>
+    <td colspan="3" style="text-align:left;font-size:14px;">Los seguros se encuentran incluidos en el valor de la cuota por todo el periodo del contrato</td>
   </tr>
   <tr>
     <td colspan="3" style="text-align:left;font-size:14px;">&nbsp;</td>
   </tr>
   <tr>
-    <td colspan="3" style="text-align:left;font-size:14px;">La presente cotización es referencial y 
-est&aacute; sujeta a la aprobación de nuestro comité de crédito; </td>
+    <td colspan="3" style="text-align:left;font-size:14px;">La presente cotización es referencial y est&aacute; sujeta a la aprobación de nuestro comité de crédito; </td>
   </tr>
   <tr>
     <td colspan="3" style="text-align:left;font-size:14px;">y tiene una validez de 10 días.</td>
@@ -253,9 +255,15 @@ est&aacute; sujeta a la aprobación de nuestro comité de crédito; </td>
   <tr>
     <td colspan="3" style="text-align:center;font-size:14px;">Avda. Santa María 6350 Piso 1, Vitacura Tel. 2-750.84.00 – www.rway.cl</td>
   </tr>
+
 </table>
 
+</br>
+</br>
+
+
 <? if($superadmin) { ?>
+
 <h2>
 Cálculo alternativa 1
 </h2>

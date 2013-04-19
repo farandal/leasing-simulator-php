@@ -220,6 +220,15 @@ return CMap::mergeArray(
                                         'marges'      => array(5, 5, 5, 8), // margins by default, in order (left, top, right, bottom)
                                     )
                                 )
+								
+								,
+                                'PDFTK' => array(
+                                    'librarySourcePath' => 'common.vendor.pdftk.*',
+                                    'classFile'         => 'pdftk.php', // For adding to Yii::$classMap
+                                    
+                                )
+								
+								
                             ),
                         ),
                     

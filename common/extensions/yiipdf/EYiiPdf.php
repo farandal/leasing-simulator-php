@@ -49,6 +49,8 @@ class EYiiPdf extends CApplicationComponent
      * @var HTML2PDF|null
      */
     protected $_HTML2PDF = null;
+	
+	protected $_PDFTK = null;
 
     protected $_importedPaths = array();
 
@@ -113,6 +115,16 @@ class EYiiPdf extends CApplicationComponent
         $this->initLibrary(__FUNCTION__, func_get_args());
         return $this->_HTML2PDF;
     }
+	
+	
+	 public function PDFTK()
+    {
+        $this->initLibrary(__FUNCTION__, func_get_args());
+        return $this->_PDFTK;
+    }
+	
+	
+	
 }
 
 /**

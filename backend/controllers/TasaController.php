@@ -90,12 +90,13 @@ class TasaController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+		//print_r($_POST['Tasa']);
 		if(isset($_POST['Tasa']))
 		{
 			$model->attributes=$_POST['Tasa'];
-			if($model->save())
+			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('update',array(
