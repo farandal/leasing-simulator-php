@@ -1,0 +1,11 @@
+/backend/www/assets/
+/frontend/www/assets/
+/frontend/runtime/cache/
+/images/organization/
+/runbehat
+/runpostdeploy
+/tests
+/yiic
+/yiic.bat
+/frontend/config/main.php
+/common/config/environments/params-private.php
