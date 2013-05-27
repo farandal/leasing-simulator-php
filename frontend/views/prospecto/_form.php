@@ -372,7 +372,7 @@ if($model->eq_tipo == 11 && $model->eq_estado = 2) $st="";
 	
 		
                 
-                <? $range = array(); foreach(range(6,99) as $val) { $range[$val] = $val; }?>
+                <? $range = array(); foreach(range(6,48) as $val) { $range[$val] = $val; }?>
             
 		<?php echo $form->labelEx($model,'co_plazo'); ?>
                 <?php echo $form->dropDownList($model,'co_plazo',$range,array()); ?>

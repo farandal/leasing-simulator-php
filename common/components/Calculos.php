@@ -142,6 +142,10 @@ return $pmt * exp($R * ($n/$m));
             
             $tmp = Yii::app()->basePath."/runtime/monedas.xml";
 	    
+	  $source_error = true;
+
+	
+	if($source_error) {
             if(!file_exists($tmp) OR (time() - filemtime($tmp)) > 600 ){
                     $c = file_get_contents("http://indicador.eof.cl/xml", "w+");
                     if(!empty($c)) {
@@ -149,6 +153,9 @@ return $pmt * exp($R * ($n/$m));
 		 }
 			
             } 
+	} else {
+		 file_put_contents($tmp, $c);
+	}
 
 	 //$c = file_get_contents("http://indicador.eof.cl/xml", "w+");
          //file_put_contents($tmp, $c);
