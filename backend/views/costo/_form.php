@@ -28,6 +28,12 @@
 	</div>
 
 	<div class="row">
+                <?php echo $form->labelEx($model,'rango'); ?>
+                <?php echo $form->textField($model,'rango',array('size'=>1,'maxlength'=>1); ?>
+                <?php echo $form->error($model,'rango'); ?>
+        </div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'valor'); ?>
 		<?php echo $form->textField($model,'valor'); ?>
 		<?php echo $form->error($model,'valor'); ?>

@@ -142,10 +142,10 @@ return $pmt * exp($R * ($n/$m));
             
             $tmp = Yii::app()->basePath."/runtime/monedas.xml";
 	    
-	  $source_error = true;
+	  $source_error = false;
 
 	
-	if($source_error) {
+/*	if($source_error) {
             if(!file_exists($tmp) OR (time() - filemtime($tmp)) > 600 ){
                     $c = file_get_contents("http://indicador.eof.cl/xml", "w+");
                     if(!empty($c)) {
@@ -155,10 +155,10 @@ return $pmt * exp($R * ($n/$m));
             } 
 	} else {
 		 file_put_contents($tmp, $c);
-	}
+	}*/
 
-	 //$c = file_get_contents("http://indicador.eof.cl/xml", "w+");
-         //file_put_contents($tmp, $c);
+	 $c = file_get_contents("http://indicador.eof.cl/xml", "w+");
+         file_put_contents($tmp, $c);
          //echo $c;
             
             if($I = simplexml_load_file($tmp)){
@@ -253,9 +253,28 @@ return $pmt * exp($R * ($n/$m));
                         $resumen["VALOR EQUIPO NUEVO UF"] = $valor_equipo_nuevo;
 
                         //CALCULO DE COSTOS
-                        
-                        $costos = Costo::model()->findAll();
+
+                        //$costos = Costo::model()->findAll();
                         $suma_costos = 0;
+
+			
+			$ranges[1] = range(6,12);
+			$ranges[2] = range(13,18);
+			$ranges[3] = range(19,9999);
+			
+			$rango_costo = 3;
+			for($i = 1;$i<=3;$i++) {
+                               if(in_array(intval($plazo), $ranges[$i])){
+                                    $rango_costo = $i;
+                               }
+			}
+			$resumen["RANGO COSTOS"] = $rango_costo;
+
+			    $criteria=new CDbCriteria;
+                            $criteria->condition='rango = :rango';
+                            $criteria->params=array(':rango'=>$rango_costo);
+                            $costos = Costo::model()->findAll($criteria); 
+
                         
                         foreach($costos as $costo) {
                             
@@ -263,7 +282,7 @@ return $pmt * exp($R * ($n/$m));
                             if($costo->nombre == "transferencia" && $prospecto->eqTipo->code == "EM") {
                                 $costo->valor = floatval(0);
                             }
-                            
+
                             switch($costo->tipo) {
                                 case 1:
                                     //SE SUMA EL MONTO EN UF

@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'costo':
  * @property integer $id
  * @property string $nombre
+ * @property string  $rango
  * @property integer $tipo
  * @property double $valor
  */
@@ -41,9 +42,10 @@ class Costo extends CActiveRecord
 			array('tipo', 'numerical', 'integerOnly'=>true),
 			array('valor', 'numerical'),
 			array('nombre', 'length', 'max'=>255),
+                        array('rango', 'numerical', 'max'=>1,'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, tipo, valor', 'safe', 'on'=>'search'),
+			array('nombre,rango, tipo, valor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,7 +68,8 @@ class Costo extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'nombre' => 'Nombre',
-			'tipo' => 'Tipo',
+			'rango' => 'Rango',
+                        'tipo' => 'Tipo',
 			'valor' => 'Valor',
 		);
 	}
@@ -84,7 +87,8 @@ class Costo extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('nombre',$this->nombre,true);
-		$criteria->compare('tipo',$this->tipo);
+		$criteria->compare('rango',$this->rango);
+                $criteria->compare('tipo',$this->tipo);
 		$criteria->compare('valor',$this->valor);
 
 		return new CActiveDataProvider($this, array(

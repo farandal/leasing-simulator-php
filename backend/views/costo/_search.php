@@ -25,6 +25,12 @@
 		<?php echo $form->label($model,'tipo'); ?>
 		<?php echo $form->textField($model,'tipo'); ?>
 	</div>
+	
+	
+        <div class="row">
+                <?php echo $form->label($model,'rango'); ?>
+                <?php echo $form->textField($model,'rango'); ?>
+        </div>
 
 	<div class="row">
 		<?php echo $form->label($model,'valor'); ?>

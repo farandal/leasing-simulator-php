@@ -9,13 +9,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Costo', 'url'=>array('index')),
-	array('label'=>'Create Costo', 'url'=>array('create')),
-	array('label'=>'View Costo', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Costo', 'url'=>array('admin')),
+	array('label'=>'Listar Costos', 'url'=>array('index')),
+	array('label'=>'Crear Costo', 'url'=>array('create')),
+	array('label'=>'Ver Costo', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Administrar Costo', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update Costo <?php echo $model->id; ?></h1>
+<h1>Actualizar Costo <?php echo $model->id; ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

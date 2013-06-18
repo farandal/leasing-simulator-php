@@ -8,11 +8,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Costo', 'url'=>array('index')),
-	array('label'=>'Create Costo', 'url'=>array('create')),
-	array('label'=>'Update Costo', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Costo', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Costo', 'url'=>array('admin')),
+	array('label'=>'Listar Costo', 'url'=>array('index')),
+	array('label'=>'Crear Costo', 'url'=>array('create')),
+	array('label'=>'Actualizar Costo', 'url'=>array('update', 'id'=>$model->id)),
+	array('label'=>'Borrar Costo', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Administrar Costos', 'url'=>array('admin')),
 );
 ?>
 
@@ -23,6 +23,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'nombre',
+		'rango',
 		'tipo',
 		'valor',
 	),

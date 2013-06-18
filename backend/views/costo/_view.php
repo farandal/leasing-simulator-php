@@ -17,6 +17,10 @@
 	<?php echo CHtml::encode($data->tipo); ?>
 	<br />
 
+    <b><?php echo CHtml::encode($data->getAttributeLabel('rango')); ?>:</b>
+        <?php echo CHtml::encode($data->rango); ?>
+        <br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('valor')); ?>:</b>
 	<?php echo CHtml::encode($data->valor); ?>
 	<br />
