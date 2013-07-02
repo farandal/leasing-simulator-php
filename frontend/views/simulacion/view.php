@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Volver a prospecto', 'url'=>array('prospecto/update/'.$model->prospecto->id)),
+	array('label'=>'Volver a prospecto', 'url'=>array('prospecto/update/'.unserialize($model->prospecto)->id)),
         array('label'=>'Guardar como Pdf',  'linkOptions' => array('target'=>'_blank') ,'url'=>array('simulacion/pdf/'.$model->id)),
         array('label'=>'Enviar por mail', 'url'=>array('simulacion/email/'.$model->id)),
 );

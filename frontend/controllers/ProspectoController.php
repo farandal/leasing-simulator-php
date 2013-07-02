@@ -156,7 +156,7 @@ class ProspectoController extends Controller
                             
                             //Monto a financiar y pie
                             $simulacion->prospecto_id = $_POST['sim_prospecto_id'];
-                            
+							$simulacion->prospecto = serialize($model);                            
                             $simulacion->monto = $monto1;
                             $simulacion->monto2 = $monto2;
                             $simulacion->monto3 = $monto3;
@@ -182,91 +182,85 @@ class ProspectoController extends Controller
                             
                             //Redirigir al usuario a la página del prospecto
 
-$usuario_creador=YumUser::model()->find('id=:id', array(':id'=>$model->user_id));
+							$usuario_creador=YumUser::model()->find('id=:id', array(':id'=>$model->user_id));
 
                             $br = "</br>";
                             $body = $usuario_creador->profile->firstname." ".$usuario_creador->profile->lastname." Ha creado una nueva simulación ".$br.$br;
-			    $body .= " Detalles: ".$br;
-				$body .= "<a href=\"http://rightwayleasing.cl/simulacion/".$simulacion->id."\"> Ver en página web</a>".$br.$br;
-
-			    
-$detalles = $this->renderPartial('/prospecto/_detalle',array("model"=>$model),true);
-$body .= $detalles; 
-
-		
-			    $html2pdf = Yii::app()->ePdf->HTML2PDF();
-                    	$html2pdf->WriteHTML($this->renderPartial('/simulacion/_formulario',array("data"=>$simulacion,"ispdf"=>true,"superadmin"=>false), 
-true));
-
-			    
-
+			    			$body .= " Detalles: ".$br;
+							$body .= "<a href=\"http://rightwayleasing.cl/simulacion/".$simulacion->id."\"> Ver en página web</a>".$br.$br;
+							$detalles = $this->renderPartial('/prospecto/_detalle',array("model"=>$model),true);
+							$body .= $detalles; 
+						    $html2pdf = Yii::app()->ePdf->HTML2PDF();
+            	        	$html2pdf->WriteHTML($this->renderPartial('/simulacion/_formulario',array("data"=>$simulacion,"ispdf"=>true,"superadmin"=>false),true));
                             Yii::import('common.extensions.yiimail.YiiMailMessage');
                             $message = new YiiMailMessage;
                             $message->setBody($body, 'text/html');
-
                             $message->subject = 'RightWay - Cotización Nº '.$_POST['sim_prospecto_id']."-".$simulacion->id;
                             $message->addTo(Yii::app()->params['adminEmail']);
 			    
-//OBTENER CORREOS DE SUPERADMINS
-$organizacion_prospecto=Organizacion::model()->find('id=:id', array(':id'=>$model->organizacion_id));
-$usuarios_supervisores = YumUser::model()->findAll('organizacion_id=:organizacion_id',array(':organizacion_id'=>$model->organizacion_id));
+							//OBTENER CORREOS DE SUPERADMINS
+							$organizacion_prospecto=Organizacion::model()->find('id=:id', array(':id'=>$model->organizacion_id));
+							$usuarios_supervisores = YumUser::model()->findAll('organizacion_id=:organizacion_id',array(':organizacion_id'=>$model->organizacion_id));
 
-$usuarios_administradores = YumUser::model()->findAll();
+							$usuarios_administradores = YumUser::model()->findAll();
 
-foreach($usuarios_supervisores as $usuario) {
-		if($usuario->hasRole("supervisor")) { 
-//		echo($usuario->profile->email);
-			$message->addBCC($usuario->profile->email);
-
-		}
-
-}
-
-foreach($usuarios_administradores as $usuario) {
-                if($usuario->hasRole("superadmin")) {
-// echo($usuario->profile->email);
-                       $message->addBCC($usuario->profile->email);
-
-                }
-
-}
-
-$message->addBCC("farandal@gmail.com");
-
-$message->addBCC($usuario_creador->profile->email);
-
-//OBTENER CORREOS DE SUPERVISORES
-
-
-
-
+							foreach($usuarios_supervisores as $usuario) {
+								if($usuario->hasRole("supervisor")) $message->addBCC($usuario->profile->email);							
+							}
+							
+							foreach($usuarios_administradores as $usuario) {
+								if($usuario->hasRole("superadmin")) $message->addBCC($usuario->profile->email);
+							}
+							
+							
+							$message->addBCC($usuario_creador->profile->email);
                             $message->from = Yii::app()->params['adminEmail'];
 
  									
-					$cotizacion_file = '/home/rwaycl/cotizaciones/rightway_cotizacion_'.$id.'.pdf';
-					$adicional_file = '/home/rwaycl/rightway/frontend/www/files/ANTECEDENTESREQUERIDOSRIGHTWAYLEASING.pdf';
+							$cotizacion_file = '/home/rwaycl/cotizaciones/rightway_cotizacion_'.$id.'.pdf';
+							$adicional_file = '/home/rwaycl/rightway/frontend/www/files/ANTECEDENTESREQUERIDOSRIGHTWAYLEASING.pdf';
 					
-					$html2pdf->Output($cotizacion_file, 'F');
+							$html2pdf->Output($cotizacion_file, 'F');
+							
+							$oPdftk = Yii::app()->ePdf->PDFTK();
+				    		$oPdftk ->setInputFile(array("filename" => $cotizacion_file))
+                            		->setInputFile(array("filename" => $adicional_file));
 				
-				   	$oPdftk = Yii::app()->ePdf->PDFTK();
-					
-				    $oPdftk ->setInputFile(array("filename" => $cotizacion_file))
-                            ->setInputFile(array("filename" => $adicional_file));
 				
-				
-					$final_pdf = $oPdftk->_renderPdf();
+							$final_pdf = $oPdftk->_renderPdf();
 					
 					
-					$file = Swift_Attachment::newInstance( $final_pdf , "rightway_cotizacion_".$id.".pdf");
-                    $message->attach($file);
+							$file = Swift_Attachment::newInstance( $final_pdf , "rightway_cotizacion_".$id.".pdf");
+                    		$message->attach($file);
 					
-
-
-
                             Yii::app()->mail->send($message);
+							
+							//Enviar copia del pdf a ejecutivo rightway con tasas
+							if($usuario->profile->ejecutivorwl!="") {
+								
+								$ejecutivorwl = YumUser::model()->cache(500)->findByPk($usuario->profile->ejecutivorwl);
+								$body .= "</br></br><b>Copia ejecutivo Right Way Leasing.</b> </br> El pdf adjunto incluye los datos, valores y tasas con los que se creó esta cotización";
+								
+								$message = new YiiMailMessage;
+								$message->setBody($body, 'text/html');
+								$message->subject = 'RightWay - Cotización Nº '.$_POST['sim_prospecto_id']."-".$simulacion->id." [DATA]";
+								$message->addTo($ejecutivorwl->profile->email);
+								$message->addBCC("farandal@gmail.com");
+								$message->from = Yii::app()->params['adminEmail'];	
+								
+								$html2pdf = Yii::app()->ePdf->HTML2PDF();
+								$html2pdf->WriteHTML($this->renderPartial('/simulacion/_formulario',array("data"=>$simulacion,"ispdf"=>true,"superadmin"=>true),true));
+								$pdfdatos = $html2pdf->Output("","S");
+								
+								$file = Swift_Attachment::newInstance( $pdfdatos , "rightway_cotizacion_datos_".$id.".pdf");
+								
+								$message->attach($file);
+								
+								Yii::app()->mail->send($message);
+							
+							}
                             
-                            
-                            
+							
                             $this->redirect(array('update','id'=>$_POST['sim_prospecto_id']));
                             
                             

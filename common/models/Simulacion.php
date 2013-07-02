@@ -16,9 +16,10 @@
  * @property integer $monto
  * @property integer $estado
  * @property string $fecha
+ * @property string $prospecto
  *
  * The followings are the available model relations:
- * @property Prospecto $prospecto
+ * 
  */
 class Simulacion extends CActiveRecord
 {
@@ -41,11 +42,10 @@ class Simulacion extends CActiveRecord
 	}
 
         
-        
-          public function beforeSave(){
+    public function beforeSave(){
             $this->fecha = new CDbExpression('NOW()');
             return parent::beforeSave();
-        }
+    }
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -73,7 +73,7 @@ class Simulacion extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'prospecto' => array(self::BELONGS_TO, 'Prospecto', 'prospecto_id'),
+			/*'prospecto' => array(self::BELONGS_TO, 'Prospecto', 'prospecto_id'),*/
 		);
 	}
 
@@ -95,6 +95,7 @@ class Simulacion extends CActiveRecord
 			'monto' => 'Monto',
 			'estado' => 'Estado',
 			'fecha' => 'Fecha',
+			'prospecto' => 'Prospecto Data',
 		);
 	}
 
